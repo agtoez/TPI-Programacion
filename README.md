@@ -22,27 +22,29 @@ Se implementan **validaciones en todas las entradas**, evitando campos vacíos o
 ## Estructura del Proyecto
 
 ```text
-TPI-Programacion/
-├── main.py
-├── funciones.py
-├── paises.csv
-└── docs/
-    ├── Informe_TPI.pdf
-    ├── capturas/
-    └── diagrama/
-
-
-
+TPI-Programacion
+│
+├─ main.py                  # Menú principal y control del flujo del programa
+├─ funciones.py             # Validaciones, búsqueda, filtrado, ordenamiento y estadísticas
+├─ paises.csv               # Dataset inicial cargado por el sistema
+│
+└─ docs
+   ├─ Informe_TPI.pdf       # Informe teórico del trabajo integrador
+   ├─ capturas/             # Capturas de pantalla del programa funcionando
+   └─ diagrama/             # Diagrama del funcionamiento del sistema
+```
 ## Formato del Archivo CSV
 
 El archivo `paises.csv` debe contener las siguientes columnas:
 
-'''csv
+```csv
 nombre,poblacion,superficie,continente
 Argentina,45376763,2780400,América
 Japón,125800000,377975,Asia
 Brasil,213993437,8515767,América
-Alemania,83149300,357022,Europa'''
+Alemania,83149300,357022,Europa
+```
+
 
 ## Ejecución del Programa
 	1- Abrir una terminal en la carpeta del proyecto.
