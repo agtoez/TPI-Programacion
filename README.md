@@ -19,8 +19,6 @@ Se implementan **validaciones en todas las entradas**, evitando campos vacíos o
 
 ## Estructura del Proyecto
 
-## Estructura del Proyecto
-
 ```text
 TPI-Programacion
 │
@@ -33,6 +31,9 @@ TPI-Programacion
    ├─ capturas/             # Capturas de pantalla del programa funcionando
    └─ diagrama/             # Diagrama del funcionamiento del sistema
 ```
+
+---
+
 ## Formato del Archivo CSV
 
 El archivo `paises.csv` debe contener las siguientes columnas:
@@ -45,6 +46,7 @@ Brasil,213993437,8515767,América
 Alemania,83149300,357022,Europa
 ```
 
+---
 
 ## Ejecución del Programa
 	1- Abrir una terminal en la carpeta del proyecto.
@@ -59,6 +61,8 @@ Alemania,83149300,357022,Europa
 	5- Ordenar países: Por nombre, población o superficie (ascendente o descendente).
 	6- Mostrar estadísticas: Máx/mín población, promedios y cantidad de países por continente.
 	0- Salir: Finaliza el programa.
+	
+---
 
 ## Participación de los Integrantes
 	- Agustin S. Almonacid - Comision 12
