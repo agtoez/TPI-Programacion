@@ -19,17 +19,18 @@ Se implementan **validaciones en todas las entradas**, evitando campos vacíos o
 
 ## Estructura del Proyecto
 
-'''text
-	TPI-Programacion
-	│
-	├─ main.py # Menú principal y control del flujo del programa
-	├─ funciones.py # Validaciones, búsqueda, filtrado, ordenamiento y estadísticas
-	├─ paises.csv # Dataset inicial cargado por el sistema
-	│
-	└─ docs
-	├─ Informe_TPI.pdf # Informe teórico del trabajo integrador
-	├─ capturas/ # Capturas de pantalla del programa funcionando
-	└─ diagrama/ # Diagrama del funcionamiento del sistema'''
+## Estructura del Proyecto
+
+```text
+TPI-Programacion/
+├── main.py
+├── funciones.py
+├── paises.csv
+└── docs/
+    ├── Informe_TPI.pdf
+    ├── capturas/
+    └── diagrama/
+´´´
 
 
 ## Formato del Archivo CSV
