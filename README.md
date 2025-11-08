@@ -30,7 +30,7 @@ TPI-Programacion/
     ├── Informe_TPI.pdf
     ├── capturas/
     └── diagrama/
-´´´
+
 
 
 ## Formato del Archivo CSV
