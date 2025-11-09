@@ -5,7 +5,7 @@ def cargar_csv(ruta):
     lineas = archivo.readlines()
     archivo.close()
 
-    indice = 1  # Saltamos encabezado
+    indice = 1  # Saltamos el encabezado
     while indice < len(lineas):
         linea = lineas[indice].strip()
         partes = linea.split(",")
@@ -21,7 +21,6 @@ def cargar_csv(ruta):
             "superficie": superficie,
             "continente": continente
         }
-
         lista.append(pais)
         indice += 1
 
@@ -54,7 +53,8 @@ def normalizar_titulo_simple(texto):
         palabra = partes[indice]
         primera = palabra[0].upper()
         resto = palabra[1:].lower()
-        resultado.append(primera + resto)
+        palabra_final = primera + resto
+        resultado.append(palabra_final)
         indice += 1
 
     return " ".join(resultado)
@@ -94,15 +94,15 @@ def leer_texto_validado(mensaje):
         print("Error: ingrese solo letras y espacios.")
         texto = input(mensaje).strip()
 
-    # Contar letras
-    letras = 0
+    # Contar letras para validar textos muy cortos
+    cantidad = 0
     indice = 0
     while indice < len(texto):
         if texto[indice].isalpha():
-            letras += 1
+            cantidad += 1
         indice += 1
 
-    if letras < 3:
+    if cantidad < 3:
         if confirmar_valor(texto) == False:
             return leer_texto_validado(mensaje)
 
@@ -124,9 +124,10 @@ def seleccionar_continente():
     print("3) Asia")
     print("4) África")
     print("5) Oceanía")
-    print("6) Antártida")
+    print("6) Antártida\n")
 
     opcion = input("Opción: ").strip()
+
     while opcion not in ["1", "2", "3", "4", "5", "6"]:
         print("Error: seleccione una opción válida del 1 al 6.")
         opcion = input("Opción: ").strip()
@@ -140,12 +141,30 @@ def seleccionar_continente():
         case "6": return "Antártida"
 
 
+# MOSTRAR LISTA -----------------------------------------------------
+
+def mostrar_lista_completa(lista):
+    print("\n--- Lista de Países ---")
+
+    if len(lista) == 0:
+        print("No hay países cargados.\n")
+        return
+
+    indice = 0
+    while indice < len(lista):
+        pais = lista[indice]
+        print(pais["nombre"], "| Población:", pais["poblacion"], "| Superficie:", pais["superficie"], "| Continente:", pais["continente"])
+        indice += 1
+
+    print()
+
+
 # OPERACIONES -------------------------------------------------------
 
 def existe_pais(lista, nombre):
     indice = 0
     while indice < len(lista):
-        if lista[indice]["nombre"].strip().lower() == nombre.strip().lower():
+        if lista[indice]["nombre"].lower() == nombre.lower():
             return True
         indice += 1
     return False
@@ -155,6 +174,7 @@ def agregar_pais(lista, ruta_csv):
     print("\n--- Agregar País ---")
 
     nombre = leer_texto_validado("Nombre: ")
+
     if existe_pais(lista, nombre):
         print("Ya existe un país con ese nombre.\n")
         return
@@ -169,73 +189,57 @@ def agregar_pais(lista, ruta_csv):
     guardar_csv(ruta_csv, lista)
 
     print("\nPaís agregado correctamente.")
-    print("Datos registrados:")
-    print("Nombre:", nombre)
-    print("Continente:", continente)
-    print("Población:", poblacion)
-    print("Superficie:", superficie, "\n")
+    mostrar_lista_completa(lista)
 
 
 def buscar_por_nombre(lista, texto):
     print("\n--- Resultado de la Búsqueda ---")
-    texto = texto.strip().lower()
+    texto = texto.lower()
     encontrado = False
 
     indice = 0
     while indice < len(lista):
         pais = lista[indice]
-        if texto in pais["nombre"].strip().lower():
+        if texto in pais["nombre"].lower():
             encontrado = True
-            print(pais["nombre"], "|", pais["poblacion"], "|", pais["superficie"], "|", pais["continente"])
+            print(pais["nombre"], "| Población:", pais["poblacion"], "| Superficie:", pais["superficie"], "| Continente:", pais["continente"])
         indice += 1
 
     if not encontrado:
         print("No se encontraron coincidencias.\n")
+    print()
 
 
 def actualizar_pais(lista, ruta_csv):
     print("\n--- Actualizar País ---")
 
-    if len(lista) == 0:
-        print("No hay países cargados.\n")
-        return
-
     print("Lista de países disponibles:")
-    indice = 0
-    while indice < len(lista):
-        print("-", lista[indice]["nombre"])
-        indice += 1
+    mostrar_lista_completa(lista)
 
-    nombre = leer_texto_validado("\nNombre del país a actualizar: ")
+    nombre = leer_texto_validado("Nombre del país a actualizar: ")
 
     indice = 0
     encontrado = False
 
     while indice < len(lista):
         pais = lista[indice]
-        if pais["nombre"].strip().lower() == nombre.strip().lower():
+        if pais["nombre"].lower() == nombre.lower():
             encontrado = True
-
             pais["poblacion"] = leer_entero_positivo("Nueva población: ")
             pais["superficie"] = leer_entero_positivo("Nueva superficie: ")
-
             guardar_csv(ruta_csv, lista)
-
-            print("\nPaís actualizado correctamente.")
-            print("Nombre:", pais["nombre"])
-            print("Nueva población:", pais["poblacion"])
-            print("Nueva superficie:", pais["superficie"], "\n")
-            return
+            print("\nPaís actualizado correctamente.\n")
         indice += 1
 
-    print("No existe un país con ese nombre.\n")
+    if not encontrado:
+        print("No existe un país con ese nombre.\n")
 
 
 def filtrar_por_continente(lista):
     continente = seleccionar_continente().lower()
     print("\n--- Filtro por Continente ---")
-    encontrado = False
 
+    encontrado = False
     indice = 0
     while indice < len(lista):
         pais = lista[indice]
@@ -246,24 +250,120 @@ def filtrar_por_continente(lista):
 
     if not encontrado:
         print("No se encontraron países para ese continente.\n")
+    print()
 
+
+# ORDENAMIENTOS ------------------------------------------------------
 
 def ordenar_por_nombre(lista):
-    print("\n--- Ordenar por Nombre (A-Z) ---")
-
     i = 0
     while i < len(lista) - 1:
         j = i + 1
         while j < len(lista):
             if lista[i]["nombre"].lower() > lista[j]["nombre"].lower():
-                aux = lista[i]
+                t = lista[i]
                 lista[i] = lista[j]
-                lista[j] = aux
+                lista[j] = t
             j += 1
         i += 1
 
-    print("Lista ordenada correctamente.\n")
 
+def ordenar_por_poblacion_menor_a_mayor(lista):
+    i = 0
+    while i < len(lista) - 1:
+        j = i + 1
+        while j < len(lista):
+            if lista[i]["poblacion"] > lista[j]["poblacion"]:
+                t = lista[i]
+                lista[i] = lista[j]
+                lista[j] = t
+            j += 1
+        i += 1
+
+
+def ordenar_por_poblacion_mayor_a_menor(lista):
+    i = 0
+    while i < len(lista) - 1:
+        j = i + 1
+        while j < len(lista):
+            if lista[i]["poblacion"] < lista[j]["poblacion"]:
+                t = lista[i]
+                lista[i] = lista[j]
+                lista[j] = t
+            j += 1
+        i += 1
+
+
+def ordenar_por_superficie_menor_a_mayor(lista):
+    i = 0
+    while i < len(lista) - 1:
+        j = i + 1
+        while j < len(lista):
+            if lista[i]["superficie"] > lista[j]["superficie"]:
+                t = lista[i]
+                lista[i] = lista[j]
+                lista[j] = t
+            j += 1
+        i += 1
+
+
+def ordenar_por_superficie_mayor_a_menor(lista):
+    i = 0
+    while i < len(lista) - 1:
+        j = i + 1
+        while j < len(lista):
+            if lista[i]["superficie"] < lista[j]["superficie"]:
+                t = lista[i]
+                lista[i] = lista[j]
+                lista[j] = t
+            j += 1
+        i += 1
+
+
+def submenu_ordenar(lista):
+    print("\n--- Ordenar Países ---")
+    print("1) Por nombre (A-Z)")
+    print("2) Por población (menor → mayor)")
+    print("3) Por población (mayor → menor)")
+    print("4) Por superficie (menor → mayor)")
+    print("5) Por superficie (mayor → menor)")
+    print("0) Volver\n")
+
+    opcion = input("Seleccione una opción: ").strip()
+
+    match opcion:
+        case "1":
+            ordenar_por_nombre(lista)
+            print("\nOrdenados por nombre (A-Z):")
+            mostrar_lista_completa(lista)
+
+        case "2":
+            ordenar_por_poblacion_menor_a_mayor(lista)
+            print("\nOrdenados por población (menor → mayor):")
+            mostrar_lista_completa(lista)
+
+        case "3":
+            ordenar_por_poblacion_mayor_a_menor(lista)
+            print("\nOrdenados por población (mayor → menor):")
+            mostrar_lista_completa(lista)
+
+        case "4":
+            ordenar_por_superficie_menor_a_mayor(lista)
+            print("\nOrdenados por superficie (menor → mayor):")
+            mostrar_lista_completa(lista)
+
+        case "5":
+            ordenar_por_superficie_mayor_a_menor(lista)
+            print("\nOrdenados por superficie (mayor → menor):")
+            mostrar_lista_completa(lista)
+
+        case "0":
+            print()
+        case _:
+            print("Opción inválida.\n")
+
+
+# ESTADÍSTICAS ------------------------------------------------------
 
 def mostrar_estadisticas(lista):
     print("\n--- Estadísticas Generales ---")
@@ -272,6 +372,7 @@ def mostrar_estadisticas(lista):
         print("No hay datos disponibles.\n")
         return
 
+    # Mayor y menor población
     mayor = lista[0]
     menor = lista[0]
 
@@ -284,14 +385,36 @@ def mostrar_estadisticas(lista):
             menor = pais
         indice += 1
 
+    # Promedio de superficie
     total_superficie = 0
+    total_poblacion = 0
     indice = 0
     while indice < len(lista):
         total_superficie += lista[indice]["superficie"]
+        total_poblacion += lista[indice]["poblacion"]
         indice += 1
 
-    promedio = total_superficie / len(lista)
+    promedio_superficie = total_superficie / len(lista)
+    promedio_poblacion = total_poblacion / len(lista)
 
-    print("País con mayor población:", mayor["nombre"])
-    print("País con menor población:", menor["nombre"])
-    print("Promedio de superficie:", round(promedio, 2), "\n")
+    # Cantidad por continente
+    conteo = {}
+    indice = 0
+    while indice < len(lista):
+        cont = lista[indice]["continente"]
+        if cont not in conteo:
+            conteo[cont] = 1
+        else:
+            conteo[cont] = conteo[cont] + 1
+        indice += 1
+
+    print("País con mayor población:", mayor["nombre"], "con", mayor["poblacion"])
+    print("País con menor población:", menor["nombre"], "con", menor["poblacion"])
+    print("Promedio de población:", round(promedio_poblacion, 2))
+    print("Promedio de superficie:", round(promedio_superficie, 2), "km²\n")
+
+    print("Cantidad de países por continente:")
+    for continente in conteo:
+        print("-", continente + ":", conteo[continente])
+
+    print()
