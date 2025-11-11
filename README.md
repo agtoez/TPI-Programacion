@@ -35,7 +35,8 @@ TPI-Programacion/
     ├── Informe_TPI.pdf     # Informe teórico del trabajo
     ├── capturas/           # Capturas de pantalla del programa en ejecución
     └── diagrama/           # Diagrama del funcionamiento del sistema
-
+	
+---
 
 ## 🧾 Formato del Archivo CSV
 
