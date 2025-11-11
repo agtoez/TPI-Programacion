@@ -35,7 +35,7 @@ TPI-Programacion/
     ├── Informe_TPI.pdf     # Informe teórico del trabajo
     ├── capturas/           # Capturas de pantalla del programa en ejecución
     └── diagrama/           # Diagrama del funcionamiento del sistema
-	
+```
 ---
 
 ## 🧾 Formato del Archivo CSV
@@ -48,7 +48,7 @@ Argentina,45376763,2780400,América
 Japón,125800000,377975,Asia
 Brasil,213993437,8515767,América
 Alemania,83149300,357022,Europa
-
+```
 
 ## 🚀 Ejecución del Programa
 
@@ -70,7 +70,7 @@ Alemania,83149300,357022,Europa
 5- Ordenar países
 6- Mostrar estadísticas
 0- Salir
-
+```
 
 ## 💡 Ejemplos de Uso
 
@@ -81,24 +81,24 @@ Nombre: Chile
 Población: 19116209
 Superficie: 756950
 Continente: América
-
+```
 
 **Salida:**
 ```text
 País agregado correctamente.
 Chile | Población: 19116209 | Superficie: 756950 | Continente: América
-
+```
 
 ### 🔍 Buscar un país
 **Entrada:**
 ```text
 Nombre o parte: jap
-
+```
 **Salida:**
 ```text
 --- Resultado de la Búsqueda ---
 Japón | Población: 125800000 | Superficie: 377975 | Continente: Asia
-
+```
 
 ### 📊 Mostrar estadísticas
 **Salida:**
@@ -113,7 +113,7 @@ Cantidad de países por continente:
 - América: 2
 - Europa: 1
 - Asia: 1
-
+```
 
 ## 👥 Participación de los Integrantes
 
